@@ -57,7 +57,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }} className="min-h-[100vh]">
         {windowWidth > 800 && <PipesAnimation />}
         <section className="" style={{ zIndex: 1, position: "relative" }}>
           <div className="container mx-auto flex px-5 py-8 items-center justify-center flex-col">

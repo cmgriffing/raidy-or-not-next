@@ -41,9 +41,11 @@ const baseHue = 245;
 const rangeHue = 90;
 const backgroundColor = "hsla(150,80%,1%,1)";
 
+const HEADER_HEIGHT = 60;
+
 export function PipesAnimation() {
   const windowWidth = useWindowWidth();
-  const windowHeight = useWindowHeight() - 60;
+  const windowHeight = useWindowHeight() - HEADER_HEIGHT;
 
   const canvasA = useRef<HTMLCanvasElement>(null);
   const canvasB = useRef<HTMLCanvasElement>(null);
@@ -191,7 +193,7 @@ export function PipesAnimation() {
           top: 0,
           left: 0,
           width: "100vw",
-          height: "100vh",
+          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
           zIndex: 0,
         }}
       />
@@ -202,7 +204,7 @@ export function PipesAnimation() {
           top: 0,
           left: 0,
           width: "100vw",
-          height: "100vh",
+          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
           zIndex: 0,
         }}
       />
