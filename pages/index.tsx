@@ -48,8 +48,7 @@ const howItWorksSteps = [
   {
     image: "",
     title: "Get to raiding",
-    paragraph:
-      "That's it. Use the app here to figure out who to raid when you are ready.",
+    paragraph: `That${"&apos;"}s it. Use the app here to figure out who to raid when you are ready.`,
   },
 ];
 
@@ -72,7 +71,7 @@ const Home: NextPage = () => {
                 Raidy or Not
               </h1>
               <p className="mb-8 leading-relaxed">
-                We're gonna find you a raid.
+                We${"&apos;"}re gonna find you a raid.
               </p>
               <div className="flex justify-center">
                 <TwitchButton />
@@ -121,7 +120,10 @@ const Home: NextPage = () => {
         </h2>
         <div className="container px-5 py-24 mx-auto flex flex-col flex-wrap md:flex-nowrap">
           {howItWorksSteps.map((step, index) => (
-            <div className="flex relative pt-10 pb-20 sm:items-center md:w1/2  mx-auto">
+            <div
+              key={index}
+              className="flex relative pt-10 pb-20 sm:items-center md:w1/2  mx-auto"
+            >
               <div className="h-full w-6 absolute inset-0 flex items-center justify-center">
                 <div className="h-full w-1 bg-gray-200 pointer-events-none"></div>
               </div>
