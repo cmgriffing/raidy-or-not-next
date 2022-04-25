@@ -67,10 +67,10 @@ const Home: NextPage = () => {
               src={Logo.src}
             />
             <div className="text-center lg:w-2/3 w-full">
-              <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium">
+              <h1 className="title-font sm:text-4xl text-4xl 2xl:text-6xl mb-4 font-bold">
                 Raidy or Not
               </h1>
-              <p className="mb-8 leading-relaxed">
+              <p className="mb-8 leading-relaxed 2xl:text-2xl">
                 {"We're gonna find you a raid."}
               </p>
               <div className="flex justify-center">
