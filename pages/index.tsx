@@ -48,7 +48,7 @@ const howItWorksSteps = [
   {
     image: "",
     title: "Get to raiding",
-    paragraph: `That${"&apos;"}s it. Use the app here to figure out who to raid when you are ready.`,
+    paragraph: `That's it. Use the app here to figure out who to raid when you are ready.`,
   },
 ];
 
@@ -71,7 +71,7 @@ const Home: NextPage = () => {
                 Raidy or Not
               </h1>
               <p className="mb-8 leading-relaxed">
-                We${"&apos;"}re gonna find you a raid.
+                {"We're gonna find you a raid."}
               </p>
               <div className="flex justify-center">
                 <TwitchButton />
