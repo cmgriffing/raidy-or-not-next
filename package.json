@@ -4,21 +4,42 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && yarn run api-knex:prod migrate:latest",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "api-knex:prod": "NODE_ENV=production yarn run api-knex",
+    "api-knex": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex --knexfile=./knexfile.ts"
   },
   "dependencies": {
+    "@hookstate/core": "^3.0.13",
+    "@hookstate/persistence": "^3.0.0",
+    "@react-hook/window-size": "^3.0.7",
+    "axios": "^0.26.1",
+    "case": "^1.6.3",
+    "dayjs": "^1.11.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "knex": "^1.0.5",
+    "nanoid": "^3.3.2",
     "next": "12.1.5",
+    "pg": "^8.7.3",
+    "primeicons": "^5.0.0",
+    "primereact": "^8.0.0",
     "react": "18.0.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {
+    "@ngneat/falso": "^4.0.0",
+    "@types/axios": "^0.14.0",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "17.0.25",
     "@types/react": "18.0.6",
     "@types/react-dom": "18.0.2",
+    "autoprefixer": "^10.4.4",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.24",
     "typescript": "4.6.3"
   }
 }
