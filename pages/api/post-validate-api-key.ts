@@ -14,7 +14,7 @@ export default async function handler(
   try {
     user = await getUserFromApiKeyMiddleware(req);
   } catch (e) {
-    res.status(400).end();
+    res.status(401).end();
     return;
   }
 

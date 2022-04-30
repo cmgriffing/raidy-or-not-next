@@ -19,7 +19,7 @@ export function TwitchButton() {
 
   return (
     <a
-      className="p-button no-underline w-40 justify-center"
+      className="p-button no-underline w-40 justify-center xl:text-xl"
       href={twitchLoginUrl}
     >
       Login

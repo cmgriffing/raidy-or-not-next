@@ -52,9 +52,9 @@ export default function Dashboard() {
   }, [authToken.get()]);
 
   const [downloadIcons, setDownloadIcons] = useState([
-    { image: WindowsIcon.src, label: "Windows", link: "" },
-    { image: MacosIcon.src, label: "MacOS", link: "" },
-    { image: LinuxIcon.src, label: "Linux", link: "" },
+    { image: WindowsIcon, label: "Windows", link: "" },
+    { image: MacosIcon, label: "MacOS", link: "" },
+    { image: LinuxIcon, label: "Linux", link: "" },
   ]);
 
   const [streamsMap, setStreamsMap] = useState(
@@ -280,12 +280,10 @@ export default function Dashboard() {
                   download
                   className="text-center mx-2 w-20 inline-block bg-[color:var(--primary-color)] rounded p-2 active:opacity-70"
                 >
-                  <img
-                    src={icon.image}
-                    height="40"
-                    width="40"
-                    alt={`${icon.label} Icon`}
-                    className="mx-auto invert"
+                  <icon.image
+                    className="invert mx-auto"
+                    height="40px"
+                    width="40px"
                   />
                   <span>{icon.label}</span>
                 </a>
@@ -388,9 +386,9 @@ async function getReleases() {
   });
 
   return [
-    { image: WindowsIcon.src, label: "Windows", link: windowsRelease || "" },
-    { image: MacosIcon.src, label: "MacOS", link: macRelease || "" },
-    { image: LinuxIcon.src, label: "Linux", link: linuxRelease || "" },
+    { image: WindowsIcon, label: "Windows", link: windowsRelease || "" },
+    { image: MacosIcon, label: "MacOS", link: macRelease || "" },
+    { image: LinuxIcon, label: "Linux", link: linuxRelease || "" },
   ];
 }
 

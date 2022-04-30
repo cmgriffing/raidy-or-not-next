@@ -26,24 +26,32 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Container>
           <header className="flex flex-row items-center p-2">
             <Link href={isLoggedIn ? "/dashboard" : "/"}>
-              <>
-                <img
-                  alt="light bulb icon"
-                  src={Logo.src}
-                  height="40"
-                  width="40"
-                  className="mr-2"
-                />
-                <span className="text-primary no-underline text-xl flex flex-row items-center font-bold">
-                  Raidy or Not
-                </span>
-              </>
+              <Logo
+                height="40px"
+                width="40px"
+                className="mr-2 cursor-pointer"
+                alt="Logo"
+              />
+            </Link>
+            <Link href={isLoggedIn ? "/dashboard" : "/"}>
+              <span className="text-primary no-underline text-xl flex flex-row items-center font-bold cursor-pointer">
+                Raidy or Not
+              </span>
             </Link>
             <div className="flex flex-1"></div>
+            {isLoggedIn && (
+              <div className="mr-8 cursor-pointer">
+                <Link href="/dashboard">
+                  <span className="no-underline ">Dashboard</span>
+                </Link>
+              </div>
+            )}
             {!isLoggedIn && <TwitchButton />}
             {isLoggedIn && (
               <Link href="/logged-out">
-                <span className="p-button no-underline">Logout</span>
+                <span className="p-button no-underline  w-40 justify-center">
+                  Logout
+                </span>
               </Link>
             )}
           </header>
