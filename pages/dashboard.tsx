@@ -373,12 +373,26 @@ async function getReleases() {
     "https://api.github.com/repos/cmgriffing/raidy-or-not-bot/releases"
   );
 
+  const productionReleases = releases.filter((release) => {
+    if (release.tag_name.endsWith("-dev")) {
+      return false;
+    }
+
+    if (release.draft || release.prerelease) {
+      return false;
+    }
+
+    return true;
+  });
+
+  console.log({ productionReleases });
+
   const [linuxRelease, macRelease, windowsRelease] = [
     ".AppImage",
     ".dmg",
     ".exe",
   ].map((extension) => {
-    return releases[0].assets.find(
+    return productionReleases[0].assets.find(
       (asset) =>
         asset.browser_download_url.indexOf(extension) ===
         asset.browser_download_url?.length - extension.length
