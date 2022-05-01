@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Head } from "next/document";
+import Head from "next/head";
 
 import "primereact/resources/themes/vela-purple/theme.css";
 import "primereact/resources/primereact.min.css";
