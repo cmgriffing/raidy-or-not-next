@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import { Head } from "next/document";
 
 import "primereact/resources/themes/vela-purple/theme.css";
 import "primereact/resources/primereact.min.css";
@@ -22,6 +23,29 @@ function MyApp({ Component, pageProps }: AppProps) {
   const isLoggedIn = !!authToken.get();
   return (
     <SafeHydrate>
+      <Head>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#b052c0" />
+        <meta name="msapplication-TileColor" content="#9f00a7" />
+        <meta name="theme-color" content="#ffffff" />
+      </Head>
       <div className="bg-[color:var(--surface-a)]">
         <Container>
           <header className="flex flex-row items-center p-2">
