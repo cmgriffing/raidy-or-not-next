@@ -28,7 +28,7 @@ export interface PostRaidRequest {
    * @minLength 1
    * @maxLength 32
    */
-  botVersion: string;
+  botVersion?: string;
 }
 
 export interface PostLoginRequest {
