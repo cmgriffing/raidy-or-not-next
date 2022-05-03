@@ -2,6 +2,7 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createUser, getFullUser } from "../../server/repositories/users";
 import { encodeAccessToken } from "../../server/utils/jwt";
+import { postLoginRequestSchema } from "../../types/request-schemas";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,12 +13,12 @@ export default async function handler(
     return;
   }
   try {
-    const { code } = req.body;
-
-    if (!code) {
+    if (!postLoginRequestSchema.safeParse(req.body).success) {
       res.status(400).end();
       return;
     }
+
+    const { code } = req.body;
 
     const twitchResponse = await axios.post(
       "https://id.twitch.tv/oauth2/token",

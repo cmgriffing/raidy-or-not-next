@@ -1,7 +1,9 @@
-import { createRaid, Raid } from "../../server/repositories/raids";
+import { createRaid } from "../../server/repositories/raids";
 import { getUserFromApiKeyMiddleware } from "../../server/utils/middleware";
 import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "../../server/repositories/users";
+import { Raid } from "../../types/models";
+import { postRaidRequestSchema } from "../../types/request-schemas";
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,12 +21,13 @@ export default async function handler(
     return;
   }
 
-  console.log({ user });
-
   try {
-    const body: Raid = req.body;
+    if (!postRaidRequestSchema.safeParse(req.body).success) {
+      res.status(400).end();
+      return;
+    }
 
-    // validate raid body
+    const body: Raid = req.body;
 
     const now = Math.round(Date.now() / 1000);
 

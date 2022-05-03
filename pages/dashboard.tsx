@@ -1,6 +1,5 @@
 import { $authToken, $twitchToken } from "../stores/auth";
 import { ApiPath } from "../types/api";
-import { Raid } from "../server/repositories/raids";
 import { User } from "../server/repositories/users";
 import jwtDecode from "jwt-decode";
 import WindowsIcon from "../assets/windows.svg";
@@ -24,6 +23,7 @@ import { ReadonlyPassword } from "../components/ReadonlyPassword";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { TwitchStream } from "../types/twitch";
+import { Raid } from "../types/models";
 dayjs.extend(relativeTime);
 
 interface Raids {

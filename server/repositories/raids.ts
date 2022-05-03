@@ -1,14 +1,6 @@
 import { TableName } from "./../types/db";
 import { database, transformToData, transformToModel } from "../utils/knex";
-
-export interface Raid {
-  twitchId: string;
-  toTwitchChannel: string;
-  fromTwitchChannel: string;
-  raidAmount: number;
-  createdAt: number;
-  modifiedAt: number;
-}
+import { Raid } from "../../types/models";
 
 export async function createRaid(raid: Raid) {
   const transformedRaid = transformToData({ ...raid });

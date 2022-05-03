@@ -2,10 +2,10 @@ import { getUserFromTokenMiddleware } from "../../server/utils/middleware";
 import {
   getIncomingRaids,
   getOutgoingRaids,
-  Raid,
 } from "../../server/repositories/raids";
 import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "../../server/repositories/users";
+import { Raid } from "../../types/models";
 
 export default async function handler(
   req: NextApiRequest,
