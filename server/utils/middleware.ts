@@ -34,7 +34,16 @@ export async function getUserFromTokenMiddleware(req: NextApiRequest) {
 export async function getUserFromApiKeyMiddleware(req: NextApiRequest) {
   try {
     const authHeader: string = req?.headers?.authorization as string;
-    const apiKey = authHeader.replace("ApiKey ", "");
+    const apiKeyToken = authHeader.replace("ApiKey ", "");
+
+    const {
+      sub: { apiKey },
+    } = (decodeToken(apiKeyToken) as unknown) as {
+      sub: {
+        channelName: string;
+        apiKey: string;
+      };
+    };
 
     const user: User = await getUserByApiKey(apiKey);
 

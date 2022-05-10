@@ -29,3 +29,13 @@ export function encodeAccessToken(user: User) {
 export function encodeRefreshToken(user: User) {
   return encodeToken(user, "refresh");
 }
+
+export function encodeApiKeyToken(channelName: string, apiKey: string) {
+  return jwt.sign(
+    {
+      sub: { channelName, apiKey },
+    },
+    TOKEN_SIGNING_KEY,
+    {}
+  );
+}

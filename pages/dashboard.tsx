@@ -48,7 +48,7 @@ export default function Dashboard() {
   const resetApiKey = useCallback(async () => {
     const apiAxios = createJwtAxios(router, authToken.get());
     const apiKeyResponse = await apiAxios.post(ApiPath.PostApiKey);
-    setApiKey(apiKeyResponse.data.apiKey);
+    setApiKey(apiKeyResponse.data.token);
   }, [authToken.get()]);
 
   const [downloadIcons, setDownloadIcons] = useState([
@@ -127,7 +127,7 @@ export default function Dashboard() {
     const user = decoded.sub.user;
 
     newApiAxios.get(ApiPath.GetApiKey).then((apiKeyResponse) => {
-      setApiKey(apiKeyResponse.data.apiKey);
+      setApiKey(apiKeyResponse.data.token);
     });
 
     newApiAxios.get<Raids>(ApiPath.GetRaids).then((raidsResponse) => {
