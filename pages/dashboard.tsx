@@ -7,6 +7,7 @@ import LinuxIcon from "../assets/linux.svg";
 import { ApiPath } from "../types/api";
 import { Release } from "../types/github";
 import { lt as semverLessThan } from "semver";
+import { Icon } from "@iconify/react";
 
 import router from "next/router";
 import { Card } from "primereact/card";
@@ -188,7 +189,8 @@ export default function Dashboard() {
       {hasOutdatedBot && (
         <div className="w-full items-center flex flex-column justify-center p-2">
           <div className="mx-auto p-4 bg-red-200 text-black rounded border border-red-500">
-            <h2 className="text-2xl font-bold text-black mb-4 text-center">
+            <h2 className="text-2xl font-bold text-black mb-4 text-center flex flex-row items-center justify-center">
+              <Icon icon="bxs:hot" width="32" height="32" className="mr-1" />
               Warning!
             </h2>
             <p className="max-w-[28rem] mx-auto mb-4">
@@ -204,7 +206,20 @@ export default function Dashboard() {
       )}
 
       <div className="w-full items-center flex flex-column justify-center p-2">
-        <Card className="w-full" title={<h2>Recommendations</h2>}>
+        <Card
+          className="w-full"
+          title={
+            <h2 className="flex flex-row items-center">
+              <Icon
+                icon="bxs:book-add"
+                width="32"
+                height="32"
+                className="mr-1"
+              />
+              Recommendations
+            </h2>
+          }
+        >
           {!!recommendedChannels?.length && (
             <p className="pb-4">
               Select a channel to copy the raid command to your clipboard.
@@ -259,7 +274,15 @@ export default function Dashboard() {
             className="h-full"
             title={
               <div className="flex flex-row">
-                <h2>API Key</h2>
+                <h2 className="flex flex-row items-center">
+                  <Icon
+                    icon="bxs:key"
+                    width="32"
+                    height="32"
+                    className="mr-1"
+                  />
+                  API Key
+                </h2>
                 <div className="flex-1"></div>
                 <Button
                   type="button"
@@ -307,7 +330,15 @@ export default function Dashboard() {
           </Card>
         </div>
         <div className="p-2  w-full md:w-1/2">
-          <Card className="h-full" title={"Bot"}>
+          <Card
+            className="h-full"
+            title={
+              <h2 className="flex flex-row items-center">
+                <Icon icon="bxs:bot" width="32" height="32" className="mr-1" />
+                Bot
+              </h2>
+            }
+          >
             <p className="w-80 mb-3">
               To track incoming and outgoing raids, you will need to have a bot
               running on your machine. You can get it here:
@@ -344,12 +375,21 @@ export default function Dashboard() {
 
       {!!raids?.incomingRaids?.length && !!raids?.outgoingRaids?.length && (
         <div>
-          <h2 className="text-center text-2xl font-bold my-4">History</h2>
           <div className="flex flex-row justify-center flex-wrap">
             <div className="incoming-raids p-2  w-full md:w-1/2">
               <Card
                 className="h-full"
-                title={<h2 className="text-xl font-bold">Incoming</h2>}
+                title={
+                  <h2 className="font-bold flex flex-row items-center">
+                    <Icon
+                      icon="bxs:plane-land"
+                      width="32"
+                      height="32"
+                      className="mr-1"
+                    />
+                    Incoming Raids
+                  </h2>
+                }
               >
                 <ol>
                   {raids?.incomingRaids.map((raid) => (
@@ -382,7 +422,18 @@ export default function Dashboard() {
             <div className="outgoing-raids p-2 w-full md:w-1/2">
               <Card
                 className="h-full"
-                title={<h2 className="text-xl font-bold">Outgoing</h2>}
+                title={
+                  <h2 className="font-bold flex flex-row items-center">
+                    {" "}
+                    <Icon
+                      icon="bxs:plane-take-off"
+                      width="32"
+                      height="32"
+                      className="mr-1"
+                    />
+                    Outgoing Raids
+                  </h2>
+                }
               >
                 <ol>
                   {raids.outgoingRaids.map((raid) => (

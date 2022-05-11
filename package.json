@@ -16,6 +16,7 @@
   "dependencies": {
     "@hookstate/core": "^3.0.13",
     "@hookstate/persistence": "^3.0.0",
+    "@iconify/react": "^3.2.1",
     "@react-hook/window-size": "^3.0.7",
     "axios": "^0.26.1",
     "case": "^1.6.3",
