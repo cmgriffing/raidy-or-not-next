@@ -300,68 +300,70 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {!!raids?.incomingRaids?.length ||
-        (!!raids?.outgoingRaids?.length && (
-          <div>
-            <h2 className="text-center text-2xl font-bold my-4">History</h2>
-            <div className="flex flex-row justify-center">
-              <div className="incoming-raids px-2">
-                <Card
-                  className="h-full"
-                  title={<h2 className="text-xl font-bold">Incoming</h2>}
-                >
-                  <ol>
-                    {raids?.incomingRaids.map((raid) => (
-                      <li
-                        className="flex flex-row p-1 relative"
-                        key={raid.fromTwitchChannel + raid.createdAt}
-                      >
-                        {streamsMap[raid.fromTwitchChannel]?.type ===
-                          "live" && (
-                          <span
-                            className="live-dot absolute left-[-12px] top-[12px]"
-                            style={{
-                              display: "inline-block",
-                              background: "red",
-                              height: "10px",
-                              width: "10px",
-                              borderRadius: "100%",
-                            }}
-                          ></span>
-                        )}
-                        <span className="pr-8">{raid.fromTwitchChannel}</span>
-                        <span className="flex-1"></span>
-                        {dayjs(raid.createdAt * 1000).fromNow()}
-                      </li>
-                    ))}
-                  </ol>
-                </Card>
-              </div>
-              <div className="outgoing-raids px-2">
-                <Card
-                  className="h-full"
-                  title={<h2 className="text-xl font-bold">Outgoing</h2>}
-                >
-                  <ol>
-                    {raids.outgoingRaids.map((raid) => (
-                      <li
-                        className="p-1 flex flex-row relative"
-                        key={raid.toTwitchChannel + raid.createdAt}
-                      >
-                        {streamsMap[raid.toTwitchChannel]?.type === "live" && (
-                          <span className="live-dot absolute left-[-12px] top-[12px]"></span>
-                        )}
-                        <span className="pr-8">{raid.toTwitchChannel}</span>
-                        <span className="flex-1"></span>
-                        {dayjs(raid.createdAt * 1000).fromNow()}
-                      </li>
-                    ))}
-                  </ol>
-                </Card>
-              </div>
+      {!!raids?.incomingRaids?.length && !!raids?.outgoingRaids?.length && (
+        <div>
+          <h2 className="text-center text-2xl font-bold my-4">History</h2>
+          <div className="flex flex-row justify-center">
+            <div className="incoming-raids px-2">
+              <Card
+                className="h-full"
+                title={<h2 className="text-xl font-bold">Incoming</h2>}
+              >
+                <ol>
+                  {raids?.incomingRaids.map((raid) => (
+                    <li
+                      className="flex flex-row p-1 relative"
+                      key={raid.fromTwitchChannel + raid.createdAt}
+                    >
+                      {streamsMap[raid.fromTwitchChannel]?.type === "live" && (
+                        <span
+                          className="live-dot absolute left-[-12px] top-[12px]"
+                          style={{
+                            display: "inline-block",
+                            background: "red",
+                            height: "10px",
+                            width: "10px",
+                            borderRadius: "100%",
+                          }}
+                        ></span>
+                      )}
+                      <span className="pr-8">
+                        {raid?.fromTwitchChannel?.toLowerCase()}
+                      </span>
+                      <span className="flex-1"></span>
+                      {dayjs(raid.createdAt * 1000).fromNow()}
+                    </li>
+                  ))}
+                </ol>
+              </Card>
+            </div>
+            <div className="outgoing-raids px-2">
+              <Card
+                className="h-full"
+                title={<h2 className="text-xl font-bold">Outgoing</h2>}
+              >
+                <ol>
+                  {raids.outgoingRaids.map((raid) => (
+                    <li
+                      className="p-1 flex flex-row relative"
+                      key={raid.toTwitchChannel + raid.createdAt}
+                    >
+                      {streamsMap[raid.toTwitchChannel]?.type === "live" && (
+                        <span className="live-dot absolute left-[-12px] top-[12px]"></span>
+                      )}
+                      <span className="pr-8">
+                        {raid?.toTwitchChannel?.toLowerCase()}
+                      </span>
+                      <span className="flex-1"></span>
+                      {dayjs(raid.createdAt * 1000).fromNow()}
+                    </li>
+                  ))}
+                </ol>
+              </Card>
             </div>
           </div>
-        ))}
+        </div>
+      )}
 
       <Toast ref={toast} position="bottom-center" />
     </div>
