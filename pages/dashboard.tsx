@@ -166,22 +166,24 @@ export default function Dashboard() {
   }, [authToken.get(), twitchToken.get()]);
 
   useEffect(() => {
-    let latestRaidVersion = "0.0.0";
-
-    latestRaidVersion = raids?.incomingRaids[0]?.botVersion || "0.0.0";
-
     const latestOutgoingRaid =
       raids.outgoingRaids[raids.outgoingRaids.length - 1];
-    if (
-      latestOutgoingRaid &&
-      !semverLessThan(latestOutgoingRaid.botVersion, latestRaidVersion)
-    ) {
-      latestRaidVersion = latestOutgoingRaid.botVersion;
+    if (raids?.incomingRaids[0] || latestOutgoingRaid) {
+      let latestRaidVersion = "0.0.0";
+
+      latestRaidVersion = raids?.incomingRaids[0]?.botVersion || "0.0.0";
+
+      if (
+        latestOutgoingRaid &&
+        !semverLessThan(latestOutgoingRaid.botVersion, latestRaidVersion)
+      ) {
+        latestRaidVersion = latestOutgoingRaid.botVersion;
+      }
+
+      console.log({ latestBotVersion, latestRaidVersion });
+
+      setHasOutdatedBot(semverLessThan(latestRaidVersion, latestBotVersion));
     }
-
-    console.log({ latestBotVersion, latestRaidVersion });
-
-    setHasOutdatedBot(semverLessThan(latestRaidVersion, latestBotVersion));
   }, [latestBotVersion, raids]);
 
   return (
