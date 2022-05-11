@@ -1,11 +1,12 @@
 import { $authToken, $twitchToken } from "../stores/auth";
-import { ApiPath } from "../types/api";
 import { User } from "../server/repositories/users";
 import jwtDecode from "jwt-decode";
 import WindowsIcon from "../assets/windows.svg";
 import MacosIcon from "../assets/macos.svg";
 import LinuxIcon from "../assets/linux.svg";
+import { ApiPath } from "../types/api";
 import { Release } from "../types/github";
+import { lt as semverLessThan } from "semver";
 
 import router from "next/router";
 import { Card } from "primereact/card";
@@ -41,6 +42,8 @@ export default function Dashboard() {
   const [channelScoresMap, setChannelScoresMap] = useState(
     {} as Record<string, number>
   );
+  const [hasOutdatedBot, setHasOutdatedBot] = useState(false);
+  const [latestBotVersion, setLatestBotVersion] = useState("0.0.0");
 
   const authToken = useHookstate($authToken);
   const twitchToken = useHookstate($twitchToken);
@@ -119,7 +122,8 @@ export default function Dashboard() {
       return;
     }
 
-    getReleases().then((releases) => {
+    getReleases().then(({ releases, latestVersion }) => {
+      setLatestBotVersion(latestVersion);
       setDownloadIcons(releases);
     });
 
@@ -160,8 +164,45 @@ export default function Dashboard() {
     });
   }, [authToken.get(), twitchToken.get()]);
 
+  useEffect(() => {
+    let latestRaidVersion = "0.0.0";
+
+    latestRaidVersion = raids?.incomingRaids[0]?.botVersion || "0.0.0";
+
+    const latestOutgoingRaid =
+      raids.outgoingRaids[raids.outgoingRaids.length - 1];
+    if (
+      latestOutgoingRaid &&
+      !semverLessThan(latestOutgoingRaid.botVersion, latestRaidVersion)
+    ) {
+      latestRaidVersion = latestOutgoingRaid.botVersion;
+    }
+
+    console.log({ latestBotVersion, latestRaidVersion });
+
+    setHasOutdatedBot(semverLessThan(latestRaidVersion, latestBotVersion));
+  }, [latestBotVersion, raids]);
+
   return (
     <div className="py-10 mx-auto w-full sm:w-[480px] md:w-[768px]">
+      {hasOutdatedBot && (
+        <div className="w-full items-center flex flex-column justify-center p-2">
+          <div className="mx-auto p-4 bg-red-200 text-black rounded border border-red-500">
+            <h2 className="text-2xl font-bold text-black mb-4 text-center">
+              Warning!
+            </h2>
+            <p className="max-w-[28rem] mx-auto mb-4">
+              Your most recent raids are running an outdated version of the bot.
+              Upgrade now to get the latest bug fixes and features.
+            </p>
+            <p className="max-w-[28rem] mx-auto">
+              If you have already upgraded, this message will disappear on your
+              next incoming or outgoing raid.
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="w-full items-center flex flex-column justify-center p-2">
         <Card className="w-full" title={<h2>Recommendations</h2>}>
           {!!recommendedChannels?.length && (
@@ -272,7 +313,7 @@ export default function Dashboard() {
               running on your machine. You can get it here:
             </p>
 
-            <div className="flex flex-row items-center justify-center">
+            <div className="flex flex-row items-center justify-center mt-4">
               {downloadIcons.map((icon) => (
                 <a
                   key={icon.label}
@@ -290,11 +331,12 @@ export default function Dashboard() {
               ))}
             </div>
 
-            <p className="p-2">
+            <p className="mt-6 text-center">
               You can also see the latest releases on
               <Link href="https://github.com/cmgriffing/raidy-or-not-bot/releases">
-                Github
+                <a className="text-brand-300 ml-1 cursor-pointer">Github</a>
               </Link>
+              .
             </p>
           </Card>
         </div>
@@ -387,6 +429,8 @@ async function getReleases() {
     return true;
   });
 
+  const latestVersion = productionReleases[0].name;
+
   console.log({ productionReleases });
 
   const [linuxRelease, macRelease, windowsRelease] = [
@@ -401,11 +445,14 @@ async function getReleases() {
     )?.browser_download_url;
   });
 
-  return [
-    { image: WindowsIcon, label: "Windows", link: windowsRelease || "" },
-    { image: MacosIcon, label: "MacOS", link: macRelease || "" },
-    { image: LinuxIcon, label: "Linux", link: linuxRelease || "" },
-  ];
+  return {
+    releases: [
+      { image: WindowsIcon, label: "Windows", link: windowsRelease || "" },
+      { image: MacosIcon, label: "MacOS", link: macRelease || "" },
+      { image: LinuxIcon, label: "Linux", link: linuxRelease || "" },
+    ],
+    latestVersion,
+  };
 }
 
 function getChannelScoresMap(raids: Raids) {
