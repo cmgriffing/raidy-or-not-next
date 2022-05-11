@@ -1,6 +1,6 @@
 async function up(knex) {
   return knex.schema.table("raids", function (table) {
-    table.specificType("bot_version", "char(32)").notNullable();
+    table.specificType("bot_version", "char(32)");
   });
 }
 module.exports.up = up;
