@@ -161,9 +161,9 @@ export default function Dashboard() {
   }, [authToken.get(), twitchToken.get()]);
 
   return (
-    <div className="py-10">
-      <div className="w-full items-center flex flex-column justify-center py-4">
-        <Card title={<h2>Recommendations</h2>}>
+    <div className="py-10 mx-auto w-full sm:w-[480px] md:w-[768px]">
+      <div className="w-full items-center flex flex-column justify-center p-2">
+        <Card className="w-full" title={<h2>Recommendations</h2>}>
           {!!recommendedChannels?.length && (
             <p className="pb-4">
               Select a channel to copy the raid command to your clipboard.
@@ -207,13 +207,13 @@ export default function Dashboard() {
           )}
 
           {!recommendedChannels?.length && (
-            <p>No recommended channels at this time.</p>
+            <p className="text-center">No recommended channels at this time.</p>
           )}
         </Card>
       </div>
 
-      <div className="w-full flex flex-row justify-center">
-        <div className="px-2">
+      <div className="w-full flex flex-row flex-wrap justify-center">
+        <div className="p-2 w-full md:w-1/2">
           <Card
             className="h-full"
             title={
@@ -240,7 +240,7 @@ export default function Dashboard() {
                 It can be reset using the menu at the top of this card.
               </p>
             </div>
-            <div className="flex-row items-center justify-center text-center mt-4">
+            <div className="flex-row items-center justify-center text-center mt-8">
               <label className="sr-only">API Key </label>
               <div className="p-inputgroup flex-1">
                 <ReadonlyPassword
@@ -265,7 +265,7 @@ export default function Dashboard() {
             </div>
           </Card>
         </div>
-        <div className="px-2">
+        <div className="p-2  w-full md:w-1/2">
           <Card className="h-full" title={"Bot"}>
             <p className="w-80 mb-3">
               To track incoming and outgoing raids, you will need to have a bot
@@ -303,8 +303,8 @@ export default function Dashboard() {
       {!!raids?.incomingRaids?.length && !!raids?.outgoingRaids?.length && (
         <div>
           <h2 className="text-center text-2xl font-bold my-4">History</h2>
-          <div className="flex flex-row justify-center">
-            <div className="incoming-raids px-2">
+          <div className="flex flex-row justify-center flex-wrap">
+            <div className="incoming-raids p-2  w-full md:w-1/2">
               <Card
                 className="h-full"
                 title={<h2 className="text-xl font-bold">Incoming</h2>}
@@ -337,7 +337,7 @@ export default function Dashboard() {
                 </ol>
               </Card>
             </div>
-            <div className="outgoing-raids px-2">
+            <div className="outgoing-raids p-2 w-full md:w-1/2">
               <Card
                 className="h-full"
                 title={<h2 className="text-xl font-bold">Outgoing</h2>}
