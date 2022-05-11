@@ -38,11 +38,11 @@ export default async function handler(
     const incomingRaidCountsSet: Record<string, number> = {};
 
     const sortedRawIncomingRaids = rawIncomingRaids.sort(
-      (a, b) => a.createdAt - b.createdAt
+      (a, b) => b.createdAt - a.createdAt
     );
 
     const sortedRawOutgoingRaids = rawOutgoingRaids.sort(
-      (a, b) => a.createdAt - b.createdAt
+      (a, b) => b.createdAt - a.createdAt
     );
 
     const incomingRaidsMap: Record<string, Raid> = {};
