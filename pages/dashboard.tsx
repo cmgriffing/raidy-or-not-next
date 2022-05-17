@@ -144,24 +144,6 @@ export default function Dashboard() {
 
       const newChannelNames = getChannelNames(raids, user.twitchName);
       setChannelNames(newChannelNames);
-
-      // const newStreamsMap =
-      getStreamsMap(newTwitchAxios, newChannelNames).then((newStreamsMap) => {
-        setStreamsMap(newStreamsMap);
-
-        setRecommendedChannels(
-          newChannelNames
-            .filter((channel) => {
-              return newStreamsMap[channel]?.type === "live";
-            })
-            .sort((channelA, channelB) => {
-              const channelAScore = newChannelScoresMap[channelA] || 0;
-              const channelBScore = newChannelScoresMap[channelB] || 0;
-
-              return channelAScore - channelBScore;
-            })
-        );
-      });
     });
   }, [authToken.get(), twitchToken.get()]);
 
@@ -185,6 +167,31 @@ export default function Dashboard() {
       setHasOutdatedBot(semverLessThan(latestRaidVersion, latestBotVersion));
     }
   }, [latestBotVersion, raids]);
+
+  useEffect(() => {
+    if (!twitchToken || !channelNames.length) {
+      return;
+    }
+
+    const newTwitchAxios = createTwitchAxios(router, twitchToken.get());
+
+    getStreamsMap(newTwitchAxios, channelNames).then((newStreamsMap) => {
+      setStreamsMap(newStreamsMap);
+
+      setRecommendedChannels(
+        channelNames
+          .filter((channel) => {
+            return newStreamsMap[channel]?.type === "live";
+          })
+          .sort((channelA, channelB) => {
+            const channelAScore = channelScoresMap[channelA] || 0;
+            const channelBScore = channelScoresMap[channelB] || 0;
+
+            return channelAScore - channelBScore;
+          })
+      );
+    });
+  }, [twitchToken, channelNames, channelScoresMap]);
 
   return (
     <div className="py-10 mx-auto w-full sm:w-[480px] md:w-[768px]">
