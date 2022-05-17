@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta name="msapplication-TileColor" content="#9f00a7" />
           <meta name="theme-color" content="#ffffff" />
         </Head>
-        <div className="bg-[color:var(--surface-a)] fixed top-0 left-0 right-0">
+        <div className="bg-[color:var(--surface-a)] fixed top-0 left-0 right-0 z-10">
           <Container>
             <header className="flex flex-row items-center p-2">
               <Link href={isLoggedIn ? "/dashboard" : "/"}>
