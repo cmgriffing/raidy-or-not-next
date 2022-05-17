@@ -249,23 +249,23 @@ export default function Dashboard() {
                   }}
                 >
                   <img
-                    src={streamsMap[channel].thumbnail_url}
+                    src={streamsMap[channel.toLowerCase()].thumbnail_url}
                     alt={`Image preview for ${channel}`}
                   />
                   <div className="flex flex-row items-center justify-center">
                     <span className="block text-2xl mr-2">{channel}</span>
-                    {channelScoresMap[channel] < 0 && (
+                    {channelScoresMap[channel.toLowerCase()] < 0 && (
                       <Badge severity="danger">
-                        {channelScoresMap[channel]}
+                        {channelScoresMap[channel.toLowerCase()]}
                       </Badge>
                     )}
                     {channelScoresMap[channel] === 0 && (
                       <Badge severity="info">{channelScoresMap[channel]}</Badge>
                     )}
 
-                    {channelScoresMap[channel] > 0 && (
+                    {channelScoresMap[channel.toLowerCase()] > 0 && (
                       <Badge severity="success">
-                        {channelScoresMap[channel]}
+                        {channelScoresMap[channel.toLowerCase()]}
                       </Badge>
                     )}
                   </div>
