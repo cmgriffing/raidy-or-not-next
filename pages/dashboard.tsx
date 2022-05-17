@@ -184,11 +184,11 @@ export default function Dashboard() {
       setRecommendedChannels(
         channelNames
           .filter((channel) => {
-            return newStreamsMap[channel]?.type === "live";
+            return newStreamsMap[channel.toLowerCase()]?.type === "live";
           })
           .sort((channelA, channelB) => {
-            const channelAScore = channelScoresMap[channelA] || 0;
-            const channelBScore = channelScoresMap[channelB] || 0;
+            const channelAScore = channelScoresMap[channelA.toLowerCase()] || 0;
+            const channelBScore = channelScoresMap[channelB.toLowerCase()] || 0;
 
             return channelAScore - channelBScore;
           })
@@ -259,8 +259,10 @@ export default function Dashboard() {
                         {channelScoresMap[channel.toLowerCase()]}
                       </Badge>
                     )}
-                    {channelScoresMap[channel] === 0 && (
-                      <Badge severity="info">{channelScoresMap[channel]}</Badge>
+                    {channelScoresMap[channel.toLowerCase()] === 0 && (
+                      <Badge severity="info">
+                        {channelScoresMap[channel.toLowerCase()]}
+                      </Badge>
                     )}
 
                     {channelScoresMap[channel.toLowerCase()] > 0 && (
@@ -524,18 +526,18 @@ function getChannelScoresMap(raids: Raids) {
   const newChannelScoresMap: Record<string, number> = {};
 
   raids.incomingRaids.forEach((raid) => {
-    if (!newChannelScoresMap[raid.fromTwitchChannel]) {
-      newChannelScoresMap[raid.fromTwitchChannel] = 1;
+    if (!newChannelScoresMap[raid.fromTwitchChannel.toLowerCase()]) {
+      newChannelScoresMap[raid.fromTwitchChannel.toLowerCase()] = 1;
     } else {
-      newChannelScoresMap[raid.fromTwitchChannel] += 1;
+      newChannelScoresMap[raid.fromTwitchChannel.toLowerCase()] += 1;
     }
   });
 
   raids.outgoingRaids.forEach((raid) => {
-    if (!newChannelScoresMap[raid.toTwitchChannel]) {
-      newChannelScoresMap[raid.toTwitchChannel] = -1;
+    if (!newChannelScoresMap[raid.toTwitchChannel.toLowerCase()]) {
+      newChannelScoresMap[raid.toTwitchChannel.toLowerCase()] = -1;
     } else {
-      newChannelScoresMap[raid.toTwitchChannel] -= 1;
+      newChannelScoresMap[raid.toTwitchChannel.toLowerCase()] -= 1;
     }
   });
 
