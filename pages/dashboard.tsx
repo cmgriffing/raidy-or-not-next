@@ -112,6 +112,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!authToken.get() || !twitchToken.get()) {
+      router.push("/");
       return;
     }
 
