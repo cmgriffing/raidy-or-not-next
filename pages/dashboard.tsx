@@ -142,7 +142,7 @@ export default function Dashboard() {
       const newChannelScoresMap = getChannelScoresMap(newRaids);
       setChannelScoresMap(newChannelScoresMap);
 
-      const newChannelNames = getChannelNames(raids, user.twitchName);
+      const newChannelNames = getChannelNames(newRaids, user.twitchName);
       setChannelNames(newChannelNames);
     });
   }, [authToken.get(), twitchToken.get()]);
