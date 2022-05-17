@@ -170,7 +170,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     console.log({ twitchToken, channelNames });
-    if (!twitchToken || !channelNames.length) {
+    if (!twitchToken.get() || !channelNames.length) {
       return;
     }
 
@@ -194,7 +194,7 @@ export default function Dashboard() {
           })
       );
     });
-  }, [twitchToken, channelNames, channelScoresMap]);
+  }, [twitchToken.get(), channelNames, channelScoresMap]);
 
   return (
     <div className="py-10 mx-auto w-full sm:w-[480px] md:w-[768px]">
