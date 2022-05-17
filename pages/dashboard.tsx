@@ -409,7 +409,8 @@ export default function Dashboard() {
                       className="flex flex-row p-1 relative"
                       key={raid.fromTwitchChannel + raid.createdAt}
                     >
-                      {streamsMap[raid.fromTwitchChannel]?.type === "live" && (
+                      {streamsMap[raid.fromTwitchChannel.toLowerCase()]
+                        ?.type === "live" && (
                         <span
                           className="live-dot absolute left-[-12px] top-[12px]"
                           style={{
@@ -453,7 +454,8 @@ export default function Dashboard() {
                       className="p-1 flex flex-row relative"
                       key={raid.toTwitchChannel + raid.createdAt}
                     >
-                      {streamsMap[raid.toTwitchChannel]?.type === "live" && (
+                      {streamsMap[raid.toTwitchChannel.toLowerCase()]?.type ===
+                        "live" && (
                         <span className="live-dot absolute left-[-12px] top-[12px]"></span>
                       )}
                       <span className="pr-8">
@@ -596,7 +598,7 @@ async function getStreamsMap(
 
   const newStreamsMap: Record<string, TwitchStream> = {};
   streams.forEach((stream) => {
-    newStreamsMap[stream.user_login] = stream;
+    newStreamsMap[stream.user_login.toLowerCase()] = stream;
   });
 
   return newStreamsMap;
