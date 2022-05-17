@@ -169,6 +169,7 @@ export default function Dashboard() {
   }, [latestBotVersion, raids]);
 
   useEffect(() => {
+    console.log({ twitchToken, channelNames });
     if (!twitchToken || !channelNames.length) {
       return;
     }
@@ -176,6 +177,8 @@ export default function Dashboard() {
     const newTwitchAxios = createTwitchAxios(router, twitchToken.get());
 
     getStreamsMap(newTwitchAxios, channelNames).then((newStreamsMap) => {
+      console.log({ newStreamsMap });
+
       setStreamsMap(newStreamsMap);
 
       setRecommendedChannels(
