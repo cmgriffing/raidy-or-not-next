@@ -162,14 +162,11 @@ export default function Dashboard() {
         latestRaidVersion = latestOutgoingRaid.botVersion;
       }
 
-      console.log({ latestBotVersion, latestRaidVersion });
-
       setHasOutdatedBot(semverLessThan(latestRaidVersion, latestBotVersion));
     }
   }, [latestBotVersion, raids]);
 
   useEffect(() => {
-    console.log({ twitchToken, channelNames });
     if (!twitchToken.get() || !channelNames.length) {
       return;
     }
@@ -177,8 +174,6 @@ export default function Dashboard() {
     const newTwitchAxios = createTwitchAxios(router, twitchToken.get());
 
     getStreamsMap(newTwitchAxios, channelNames).then((newStreamsMap) => {
-      console.log({ newStreamsMap });
-
       setStreamsMap(newStreamsMap);
 
       setRecommendedChannels(
@@ -497,8 +492,6 @@ async function getReleases() {
   });
 
   const latestVersion = productionReleases[0].name;
-
-  console.log({ productionReleases });
 
   const [linuxRelease, macRelease, windowsRelease] = [
     ".AppImage",
