@@ -548,11 +548,11 @@ function getChannelNames(raids: Raids, username: string) {
   const channelNamesSet = new Set<string>();
 
   [...raids.incomingRaids, ...raids.outgoingRaids].forEach((raid) => {
-    channelNamesSet.add(raid.toTwitchChannel);
-    channelNamesSet.add(raid.fromTwitchChannel);
+    channelNamesSet.add(raid.toTwitchChannel.toLowerCase());
+    channelNamesSet.add(raid.fromTwitchChannel.toLowerCase());
   });
 
-  channelNamesSet.delete(username);
+  channelNamesSet.delete(username.toLowerCase());
 
   const newChannelNames = Array.from(channelNamesSet);
 
