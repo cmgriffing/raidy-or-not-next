@@ -6,15 +6,15 @@ import MacosIcon from "../assets/macos.svg";
 import LinuxIcon from "../assets/linux.svg";
 import { ApiPath } from "../types/api";
 import { Release } from "../types/github";
-import { lt as semverLessThan } from "semver";
+import { lt as semverLessThan, valid as semverValid } from "semver";
 import { Icon } from "@iconify/react";
-
 import router from "next/router";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { Badge } from "primereact/badge";
 import { Toast } from "primereact/toast";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import axios, { AxiosInstance } from "axios";
@@ -143,6 +143,8 @@ export default function Dashboard() {
       const newChannelScoresMap = getChannelScoresMap(newRaids);
       setChannelScoresMap(newChannelScoresMap);
 
+      console.log({ channelScoresMap });
+
       const newChannelNames = getChannelNames(newRaids, user.twitchName);
       setChannelNames(newChannelNames);
     });
@@ -156,14 +158,26 @@ export default function Dashboard() {
 
       latestRaidVersion = raids?.incomingRaids[0]?.botVersion || "0.0.0";
 
+      const validBotVersion = semverValid(latestRaidVersion);
+
       if (
         latestOutgoingRaid &&
+        validBotVersion &&
         !semverLessThan(latestOutgoingRaid.botVersion, latestRaidVersion)
       ) {
         latestRaidVersion = latestOutgoingRaid.botVersion;
       }
 
-      setHasOutdatedBot(semverLessThan(latestRaidVersion, latestBotVersion));
+      let hasOutdatedBotVersion = true;
+
+      if (semverValid(latestRaidVersion) && semverValid(latestBotVersion)) {
+        hasOutdatedBotVersion = semverLessThan(
+          latestRaidVersion,
+          latestBotVersion
+        );
+      }
+
+      setHasOutdatedBot(hasOutdatedBotVersion);
     }
   }, [latestBotVersion, raids]);
 
@@ -182,11 +196,14 @@ export default function Dashboard() {
           .filter((channel) => {
             return newStreamsMap[channel.toLowerCase()]?.type === "live";
           })
+          .filter((channel) => {
+            return channelScoresMap[channel.toLowerCase()] >= 0;
+          })
           .sort((channelA, channelB) => {
             const channelAScore = channelScoresMap[channelA.toLowerCase()] || 0;
             const channelBScore = channelScoresMap[channelB.toLowerCase()] || 0;
 
-            return channelAScore - channelBScore;
+            return channelBScore - channelAScore;
           })
       );
     });
@@ -224,7 +241,15 @@ export default function Dashboard() {
                 height="32"
                 className="mr-1"
               />
-              Recommendations
+              <span className="mr-2">Recommendations</span>
+              <Button
+                className="p-button-rounded p-button-text p-button-plain no-padding"
+                aria-label="Info"
+                tooltip="The recommendations are sorted by most incoming raids and filtered by more incoming raids than outgoing."
+                tooltipOptions={{ className: "w-80" }}
+              >
+                <Icon icon="bxs:info-circle" width="24" height="24" />
+              </Button>
             </h2>
           }
         >
@@ -251,20 +276,23 @@ export default function Dashboard() {
                   <div className="flex flex-row items-center justify-center">
                     <span className="block text-2xl mr-2">{channel}</span>
                     {channelScoresMap[channel.toLowerCase()] < 0 && (
-                      <Badge severity="danger">
-                        {channelScoresMap[channel.toLowerCase()]}
-                      </Badge>
+                      <Badge
+                        severity="danger"
+                        value={channelScoresMap[channel.toLowerCase()]}
+                      ></Badge>
                     )}
                     {channelScoresMap[channel.toLowerCase()] === 0 && (
-                      <Badge severity="info">
-                        {channelScoresMap[channel.toLowerCase()]}
-                      </Badge>
+                      <Badge
+                        severity="info"
+                        value={"" + channelScoresMap[channel.toLowerCase()]}
+                      ></Badge>
                     )}
 
                     {channelScoresMap[channel.toLowerCase()] > 0 && (
-                      <Badge severity="success">
-                        {channelScoresMap[channel.toLowerCase()]}
-                      </Badge>
+                      <Badge
+                        severity="success"
+                        value={channelScoresMap[channel.toLowerCase()]}
+                      ></Badge>
                     )}
                   </div>
                 </button>

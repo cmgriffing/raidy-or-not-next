@@ -15,3 +15,9 @@ h5,
 h6 {
   color: var(--text-color);
 }
+
+/* Utility classes */
+
+.no-padding {
+  padding: 0 !important;
+}
